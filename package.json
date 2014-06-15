@@ -1,0 +1,21 @@
+{
+  "name": "glsl-transition-thumbnail-cli",
+  "version": "0.0.1",
+  "description": "Compute a thumbnail for a glsl-transition from CLI",
+  "author": "Gaëtan Renaudeau <renaudeau.gaetan@gmail.com>",
+  "bin": {
+    "glsl-transition-thumbnail": "./cmd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glslio/glsl-transition-thumbnail-cli"
+  },
+  "keywords": ["glsl", "thumbnail", "glsl-transition", "cli"],
+  "dependencies": {
+    "glsl-transition-thumbnail": "0.0.x",
+    "node-webgl": "git://github.com/gre/node-webgl.git",
+    "q": "1.0.x",
+    "qimage": "1.1.x"
+  },
+  "license": "MIT"
+}
