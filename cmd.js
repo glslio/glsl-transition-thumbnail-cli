@@ -11,8 +11,8 @@ var Image = WebGL.Image;
 
 // Configure libs for this context
 Qimage.Image = Image;
-GlslTransitionThumbnail.getDocument = function () {
-  return document;
+GlslTransitionThumbnail.createCanvas = function () {
+  return document.createElement("canvas");
 };
 
 function resolveUniforms (uniforms) {
