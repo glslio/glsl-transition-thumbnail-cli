@@ -17,7 +17,7 @@
     "commander": "2.2.0",
     "lodash": "2.4.1",
     "q": "1.0.x",
-    "qimage": "1.1.x"
+    "node-webgl-qimage": "0.0.x"
   },
   "license": "MIT"
 }

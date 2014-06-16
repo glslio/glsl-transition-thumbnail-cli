@@ -1,23 +1,18 @@
 var program = require('commander');
 var GlslTransitionThumbnail = require("glsl-transition-thumbnail");
+var GlslioTextureResolver = require("glslio-texture-resolver");
 var Q = require("q");
 var _ = require("lodash");
-var Qimage = require("qimage");
 var WebGL = require("node-webgl");
 var fs = require("fs");
 
-var document = WebGL.document();
-var Image = WebGL.Image;
-
 // Configure libs for this context
-Qimage.Image = Image;
+var document = WebGL.document();
+var Qimage = require("node-webgl-qimage")(WebGL.Image);
+var uniformsResolver = new GlslioTextureResolver(Qimage);
 GlslTransitionThumbnail.createCanvas = function () {
   return document.createElement("canvas");
 };
-
-function resolveUniforms (uniforms) {
-  return Q(uniforms); // FIXME In the future we will have to resolve the uniform textures
-}
 
 /////////////////////
 // Parameters
@@ -27,10 +22,10 @@ var pkg = require("./package.json");
 program
   .version(pkg.version)
   .description(pkg.description)
-  .option("-g, --glsl <glsl>", "The GLSL source (a file or the source code)", function (glsl) {
+  .option("-g, --glsl <glsl>", "The GLSL source (a file or the source code)", function readGlsl (glsl) {
     return glsl.match(/\.glsl$/) ? Q.nfcall(fs.readFile, glsl, "utf8") : Q(glsl);
   })
-  .option("-u, --uniforms [json]", "The uniforms in json format", _.compose(resolveUniforms, JSON.parse), Q({}))
+  .option("-u, --uniforms [json]", "The uniforms in json format", _.compose(_.bind(uniformsResolver.resolve, uniformsResolver), JSON.parse), Q({}))
   .option("-f, --from [image]", "The from image file", Qimage, Q(null))
   .option("-t, --to [image]", "The to image file", Qimage, Q(null))
   .option("-p, --progress [float]", "The progress between 0.0 and 1.0 to screenshot with", 0.4)
