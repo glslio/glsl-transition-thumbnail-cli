@@ -44,6 +44,18 @@ Q .all([ program.glsl, program.from, program.to, program.uniforms ])
     return GlslTransitionThumbnail(program.width, program.height, glsl, allUniforms, program.progress);
   })
 
+  .then(function reverseY (pixels) {
+    var buffer = new Uint8Array(pixels.length);
+    for (var y=0; y<program.height; ++y) {
+      for (var x=0; x<program.width; ++x) {
+        for (var c=0; c<3; ++c) {
+          buffer[(y*program.width+x)*3+c] = pixels[((program.height-y-1)*program.width+x)*3+c];
+        }
+      }
+    }
+    return buffer;
+  })
+
   .then(function writeResult (pixels) {
     // FIXME find a good format to output
     program.output.write(["P3\n# gl.ppm\n", program.width, " ", program.height, "\n255\n"].join(""));
