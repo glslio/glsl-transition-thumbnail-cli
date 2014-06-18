@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var program = require('commander');
 var GlslTransitionThumbnail = require("glsl-transition-thumbnail");
 var GlslioTextureResolver = require("glslio-texture-resolver");
